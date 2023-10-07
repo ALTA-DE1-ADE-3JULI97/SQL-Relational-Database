@@ -2,46 +2,95 @@ RELEASE 1:
 
 1) Insert
     1.a) Insert 3 product type.
+insert into tipe_produk (nama, category) values	
+	('AL02', 'Jeans'),
+	('AL03', 'Sweater'),
+	('AL04', 'Jacket');
 
     1.b) Insert 2 product dengan product type id = 1
+insert into produk (nama, harga, sku, id_tipe_produk) values	
+	('Masaya', '100000', 'sku0003', '1'),
+	('Hiroto', '130000', 'sku0004', '1');
 
     1.c) Insert 3 product dengan product type id = 2
+insert into produk (nama, harga, sku, id_tipe_produk) values	
+	('Sho', '105000', 'sku0005', '2'),
+	('Ren', '130000', 'sku0006', '2'),
+	('Ruki', '120000', 'sku0007', '2');
 
     1.d) Insert 3 product dengan product type id = 3
-
+insert into produk (nama, harga, sku, id_tipe_produk) values	
+	('Takumi', '110000', 'sku0008', '3'),
+	('Syoya', '125000', 'sku0009', '3'),
+	('Sukai', '150000', 'sku0010', '3');
+    
     1.e) Insert product description pada setiap product.
+alter table deskripsi_produk add column id_tipe_produk int;
+alter table deskripsi_produk add foreign key (id_tipe_produk) references tipe_produk (id);
+insert into deskripsi_produk (id_tipe_produk, ukuran, warna, deskripsi) values ('1', 'XL', 'Denim', 'Tidak boleh dicuci mesin');
+insert into deskripsi_produk (id_tipe_produk, ukuran, warna, deskripsi) values ('2', 'L', 'Red', 'Tidak boleh dicuci mesin');
+insert into deskripsi_produk (id_tipe_produk, ukuran, warna, deskripsi) values ('3', 'XLL', 'Black', 'Harus boleh dicuci mesin');
 
     1.f) Insert 3 payment methods.
+insert into metode_bayar (pilihan) values ('COD');
+insert into metode_bayar (pilihan) values ('CC');
+insert into metode_bayar (pilihan) values ('E-Wallet');
 
     1.g) Insert 5 user pada tabel user.
+insert into pelanggan (nama, alamat, tanggal_lahir, gender) values	
+	('Luffy', 'East Blue', '1999-09-02', 'Laki-Laki'),
+	('Zoro', 'East Blue', '1997-07-20', 'Laki-Laki'),
+	('Sanji', 'North Blue', '1997-02-13', 'Laki-Laki'),
+	('Nami', 'Weatheria', '1998-03-02', 'Perempuan'),
+	('Chopper', 'Sakura Kingdom', '2000-05-15', 'Laki-Laki');
+insert into transaksi (id_pelanggan, id_metode_bayar, tanggal, paid_amount, status) values	
+	('1', '1', '2023-09-15', '130000', 'done'),
+	('3', '2', '2023-09-16', '120000', 'done'),
+	('4', '3', '2023-09-16', '150000', 'done');
+insert into transaksi (id_pelanggan, id_metode_bayar, tanggal, paid_amount, status) values ('2', '1', '2023-09-14', '260000', 'done');
 
     1.h) Insert 3 transaksi di masing-masing user (min 3 user). (soal berlanjut ke soal 1.j)
+insert into transaksi (id_pelanggan, id_metode_bayar, tanggal, paid_amount, status) values	
+	('1', '1', '2023-09-15', '130000', 'done'),
+	('3', '2', '2023-09-16', '120000', 'done'),
+	('4', '3', '2023-09-16', '150000', 'done');
+insert into transaksi (id_pelanggan, id_metode_bayar, tanggal, paid_amount, status) values ('2', '1', '2023-09-14', '260000', 'done');	
 
     1.i) Insert 3 product di masing-masing transaksi.
+insert into detail_transaksi (id_produk, id_transaksi, qty, harga, sub_total) values	
+	('6', '1', '1', '130000', '130000'),
+	('6', '4', '2', '130000', '260000'),
+	('7', '2', '1', '120000', '120000'),
+	('10', '3', '1', '150000', '150000');
 
 2) Select
     2.a) Tampilkan nama user / pelanggan dengan gender Laki-laki / M.
+select * from pelanggan where gender like '%Laki-Laki';
 
     2.b) Tampilkan product dengan id = 3.
+select * from produk where id=3;
 
     2.c) Tampilkan data pelanggan yang created_at dalam range 7 hari kebelakang dan mempunyai nama mengandung kata ‘a’.
 
     2.d) Hitung jumlah user / pelanggan dengan status gender Perempuan.
+select * from pelanggan where gender like '%Perempuan';
 
     2.e) Tampilkan data pelanggan dengan urutan sesuai nama abjad
+select * from pelanggan order by nama;
 
     2.f) Tampilkan 5 data transaksi dengan product id = 3
+select * from detail_transaksi where (id_produk=3);
 
 3. Update
     3.a) Ubah data product id 1 dengan nama ‘product dummy’.
-
+update produk set nama = 'product_dummy' where id = 1;
     3.b) Update qty = 3 pada transaction detail dengan product id 1.
-
+update detail_transaksi set qty = '3' where id = 1;
 4. Delete
     4.a) Delete data pada tabel product dengan id 1.
-
+delete from produk where id = 1;
     4.b) Delete pada tabel product dengan product-type id 1.
-
+delete from produk where (id_tipe_produk=1);
 
 RELEASE 2: Join, Union, Sub-query, Function
 

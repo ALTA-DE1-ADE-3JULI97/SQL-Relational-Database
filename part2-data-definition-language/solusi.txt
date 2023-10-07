@@ -1,27 +1,80 @@
 1) Create database alta_online_shop.
-Sulisi SQL:
+Sulisi SQL: 
 
 2) Dari schema Olshop yang telah kamu kerjakan di, Implementasikanlah menjadi table pada MySQL.
     2.a Create table user
-    Sulisi SQL:
+    Sulisi SQL: 
+create table pelanggan (	
+	id serial,
+	nama text,
+	alamat text,
+	tanggal_lahir timestamp,
+	gender text,
+	primary key (id)
 
     2.b Create table product, product_type, product_description, payment_method.
     Sulisi SQL:
+create table tipe_produk (	
+	id serial,
+	nama text,
+	category text,
+	primary key (id)
+);	
+create table deskripsi_produk (	
+	id serial,
+	ukuran text,
+	warna text,
+	deskripsi text,
+	primary key (id)
 
+create table metode_bayar (	
+	id serial,
+	pilihan text,
+	primary key (id)
+);	
     3.c Create table transaction, transaction detail.
     Sulisi SQL:
+create table transaksi (	
+	id serial,
+	id_pelanggan int,
+	id_metode_bayar int,
+	tanggal timestamp,
+	paid_amount text,
+	status text,
+	primary key (id),
+	foreign key (id_pelanggan) references pelanggan (id),
+	foreign key (id_metode_bayar) references metode_bayar (id)
+);	
+create table detail_transaksi (	
+	id serial,
+	id_produk int,
+	id_transaksi int,
+	qty text,
+	harga int,
+	sub_total int,
+	primary key (id),
+	foreign key (id_produk) references produk (id),
+	foreign key (id_transaksi) references transaksi (id)
+);	
 
 3) Create table kurir dengan field id, name, created_at, updated_at.
 Sulisi SQL:
+create table kurir (	
+	id seriaL,
+	nama text,
+	created_at timestamp,
+	updated_at timestamp,
+	primary key (id)
+);	
 
 4) Tambahkan ongkos_dasar column di tabel kurir.
-Sulisi SQL:
+Sulisi SQL: alter table kurir add column ongkos_dasar int;
 
 5) Rename tabel kurir menjadi shipping.
-Sulisi SQL:
+Sulisi SQL: alter table kurir rename to shipping;
 
 6) Hapus / Drop tabel shipping karena ternyata tidak dibutuhkan.
-Sulisi SQL:
+Sulisi SQL: drop table shipping;
 
 7) Silahkan menambahkan entity baru dengan relation 1-to-1, 1-to-many, many-to-many. Seperti:
     7.a) 1-to-1: payment_method dengan description.
